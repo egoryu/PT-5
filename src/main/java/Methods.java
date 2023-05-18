@@ -29,6 +29,13 @@ public class Methods {
         p.forEach((x, y) -> d.updateAndGet(v -> v + x * x * y));
         d.updateAndGet(v -> v - m.get() * m.get());
 
+        System.out.println("Статистический ряд:");
+        count.forEach((x, y) -> System.out.printf("%-5.2f ", x));
+        System.out.println();
+        count.forEach((x, y) -> System.out.printf("%-5d ", y));
+        System.out.println();
+        p.forEach((x, y) -> System.out.printf("%-5.2f ", y));
+        System.out.println();
         System.out.printf("Мат ожидание: %.3f\n", m.get());
         System.out.printf("Дисперсия: %.3f\n", d.get());
         System.out.printf("Исправленная Дисперсия: %.3f\n", d.get() * points.size() / (points.size() - 1));
@@ -97,6 +104,8 @@ public class Methods {
         chart.getStyler().setSeriesLines(new BasicStroke[]{SOLID}).setLegendVisible(false);
         ArrayList<Double> x = new ArrayList<>(), y = new ArrayList<>();
 
+        System.out.println("Группированный ряд:");
+
         double step = getStep(points), x_start = points.get(0) - step / 2;
         for (int i = 0; i < getCount(points); i++) {
             int count = 0;
@@ -107,6 +116,8 @@ public class Methods {
                 }
             }
 
+            System.out.printf("[%.3f ; %.3f) - %d - %.3f", x_start, (x_start + step), count, (count * 1.0 / points.size() / step));
+            System.out.println();
             x.add(Double.parseDouble(String.format("%.2f", x_start + step / 2.0).replace(',', '.')));
             y.add(count * 1.0);
             x_start += step;
